@@ -1,0 +1,46 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>Candidate Manager</h1>
+    <div id="app">
+      <form action="{% url 'candidate_list' %}" method="get">
+        <input type="text" name="first_name" placeholder="First Name">
+        <input type="text" name="last_name" placeholder="Last Name">
+        <input type="submit" value="Search">
+      </form>
+     
+      <table>
+        <thead>
+          {% if candidates|length == 0 %}
+            <p>There are no candidates.</p>
+          {% else %}
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for candidate in candidates  %}
+            <tr>
+                <td>{{candidate.first_name}}</td>
+                <td>{{candidate.last_name}}</td> 
+            </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+      <h1>Interviews Listing</h1>
+      {% for interview in interviews %}
+        <h3>{{ interview.candidate.first_name }} Interviews</h2>
+        <p><a href="interviews/ics/{{interview.candidate.pk}}">Download ICS File</a></p>
+      {% empty %}
+        <p>No interviews found.</p>
+      {% endfor %}
+    </div>
+
+    <script src="/static/js/axios.min.js"></script>
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
